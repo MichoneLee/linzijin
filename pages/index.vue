@@ -1,75 +1,79 @@
 <template>
   <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        子进旅游
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+    <el-carousel :interval="5000" arrow="always">
+      <el-carousel-item v-for="(item, index) in banners" :key="index">
+        <!-- <div class="banner-image"
+          :style="`
+          background: url(${item.url}) center center noRepeat;
+          background-size: contain contain
+          `">
+
+        </div> -->
+
+        <div class="banner-image" :style=" `background: url(${'http://157.122.54.189:9095'+item.url}) center center no-repeat;
+                                            background-size: contain contain;`">
+        </div>
+      </el-carousel-item>
+    </el-carousel>
   </div>
+
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
+<script>
+export default {
+  data(){
+    return{
+      // 轮播图数据
+      banners: [
+        // {
+        //   url: 'http://157.122.54.189:9095/assets/images/th01.jfif'
+        // },
+        // {
+        //   url: 'http://157.122.54.189:9095/assets/images/th02.jfif'
+        // },
+        // {
+        //   url: 'http://157.122.54.189:9095/assets/images/th03.jfif'
+        // },
+        // {
+        //   url: 'http://157.122.54.189:9095/assets/images/th04.jfif'
+        // }
+      ]
+    }
+  },
 
-export default Vue.extend({})
+  mounted() {
+
+    // 生成api文档
+    // 请求本地数据
+    // 把图片链接替换成本地的
+
+    // Vue.prototype.$axios = axios
+    // nuxt或默认把axios绑定到组件的原型，每个组件实例通过this.$axios来调用
+    this.$axios({
+      url: "http://157.122.54.189:9095/scenics/banners"
+    }).then( res => {
+      console.log(res.data);
+      const {data} = res.data;
+      this.banners = data;
+    })
+  },
+
+}
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+  .container{
+    min-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+  }
 
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
+  .el-carousel__container{
+    height: 600px;
+  }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
+  .banner-image{
+    width: 100%;
+    height: 100%;
+  }
 </style>
