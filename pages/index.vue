@@ -99,7 +99,7 @@ export default {
     this.$axios({
       url: "http://157.122.54.189:9095/scenics/banners"
     }).then( res => {
-      console.log(res.data);
+      console.log('res.data:', res.data);
       const {data} = res.data;
       this.banners = data;
     })

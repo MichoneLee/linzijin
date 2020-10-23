@@ -21,16 +21,18 @@
     <!-- 登录 / 注册 -->
     <div class="header-right">
 
-      <div v-if="true">
+      <div v-if="$store.state.user.userInfo.token">
         <el-dropdown>
           <span class="el-dropdown-link">
-            <img src="http://157.122.54.189:9095/assets/images/avatar.jpg" alt="">
-            林子进
+            <img :src="$store.state.user.baseUrl+$store.state.user.userInfo.user.defaultAvatar" alt="">
+            {{$store.state.user.userInfo.user.nickname}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>个人中心</el-dropdown-item>
-            <el-dropdown-item>退出</el-dropdown-item>
+            <el-dropdown-item>
+              <div @click="handleClick">退出</div>
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -45,7 +47,16 @@
 
 <script>
 export default {
-
+  mounted(){
+    console.log('store.state:', this.$store.state)
+  },
+  methods: {
+    handleClick(){
+      // 清除本地的数据
+      this.$store.commit("user/clearUserInfo")
+      this.$message.success("退出登录")
+    }
+  }
 }
 </script>
 
