@@ -16,7 +16,9 @@
       </p>
 
       <el-button class="submit" type="primary" style="width:100%"
-        @click="handleLoginSubmit()">登录</el-button>
+        @click="handleLoginSubmit()">
+        登录
+      </el-button>
     </el-form>
 
   </div>
@@ -48,20 +50,24 @@ export default {
     // 提交登录
     handleLoginSubmit(){
 
-       this.$refs.form.validate(valid=>{
-         if(valid){
-           // 调用登录接口
-           this.$axios({
-             url: "http://157.122.54.189:9095/accounts/login",
-             method: "POST",
-             data: this.form
-           }).then(res=>{
-            console.log('res:', res)
-            // 调用store的方法把用户数据传过去
-            this.$store.commit("user/setUserInfo",res.data);
+      this.$refs.form.validate(valid=>{
+        if(valid){
+          // 调用登录接口
+          //  this.$axios({
+          //    url: "http://157.122.54.189:9095/accounts/login",
+          //    method: "POST",
+          //    data: this.form
+          //  }).then(res=>{
+          //   console.log('res:', res)
+          //   // 调用store的方法把用户数据传过去
+          //   this.$store.commit("user/setUserInfo",res.data);
+          // })
+          this.$store.dispatch("user/login",this.form).then(res =>{
+            this.$message.success("登录成功");
+            this.$router.push("/");
           })
-         }
-       })
+        }
+      })
 
     }
   },

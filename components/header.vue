@@ -37,7 +37,9 @@
         </el-dropdown>
       </div>
 
-      <div class="login-link" v-else>登录 / 注册</div>
+      <div class="login-link" v-else>
+        <nuxt-link to="/user/login">登录 / 注册</nuxt-link>
+      </div>
     </div>
 
   </el-row>
@@ -110,7 +112,7 @@ export default {
   }
 
   /* 菜单高亮的样式 */
-  .nuxt-link-exact-active{
+  .navs .nuxt-link-exact-active{
     background-color: #409eff;
     color: #fff!important;
   }
@@ -121,6 +123,16 @@ export default {
     height: 36px;
     border-radius: 100px;
     vertical-align: middle;
+  }
+
+  .login-link a{
+    color: #666;
+    font-size: 14px;
+  }
+
+  .login-link a:hover{
+    color: #409eff;
+    text-decoration: underline;
   }
 
 </style>

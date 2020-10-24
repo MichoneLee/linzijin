@@ -30,5 +30,39 @@ export const mutations = {
   }
 };
 
-// 用户优化
-export const actions = {};
+// 存放公共的异步方法
+export const actions = {
+  login({commit},data){
+    return  this.$axios({
+      url: "http://157.122.54.189:9095/accounts/login",
+      method: "POST",
+      data
+    }).then(res=>{
+      console.log('登录res:', res)
+      // 调用store的方法把用户数据传过去
+      commit("setUserInfo",res.data);
+
+      // 调用外部的成功的回调函数
+      // 在promise函数中可以通过Promise.resolve来调用成功的回调函数
+      Promise.resolve();
+      // Promise.reject();
+    })
+  },
+
+  register({commit},data){
+    return  this.$axios({
+      url: "http://157.122.54.189:9095/accounts/register",
+      method: "POST",
+      data
+    }).then(res=>{
+      console.log('注册res:', res)
+      // 调用store的方法把用户数据传过去
+      commit("setUserInfo",res.data);
+
+      // 调用外部的成功的回调函数
+      // 在promise函数中可以通过Promise.resolve来调用成功的回调函数
+      Promise.resolve();
+      // Promise.reject();
+    })
+  }
+};
