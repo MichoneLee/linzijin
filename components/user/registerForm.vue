@@ -111,27 +111,27 @@ export default {
     //       })
     // },
     submitForm() {
-        this.$refs.form.validate(valid=>{
-          console.log('valid:',valid)
-          if (valid) {
-            console.log('this.form:',this.form)
-            let data = {
-              username: this.form.username,
-              nickname: this.form.nickname,
-              password: this.form.password,
-              captcha: this.form.captcha
-            }
-            console.log('data:',data)
-            this.$store.dispatch("user/register",data).then(res =>{
-            this.$message.success("注册成功");
-            this.$router.push("/");
-          })
-          } else {
-            console.log('error submit!!');
-            return false;
+      this.$refs.form.validate(valid=>{
+        console.log('valid:',valid)
+        if (valid) {
+          console.log('this.form:',this.form)
+          let data = {
+            username: this.form.username,
+            nickname: this.form.nickname,
+            password: this.form.password,
+            captcha: this.form.captcha
           }
-        });
-      },
+          console.log('data:',data)
+          this.$store.dispatch("user/register",data).then(res =>{
+          this.$message.success("注册成功");
+          this.$router.push("/");
+        })
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
     // 模拟获取验证码
     handleCaptcha(){
       this.$message.success("模拟手机验证码:000000");

@@ -206,7 +206,7 @@ export default {
     font-size: 16px;
   }
 
-  .el-icon-search{
+  .search-input .el-icon-search{
     cursor: pointer;
     font-size: 22px;
     padding: 0 10px;

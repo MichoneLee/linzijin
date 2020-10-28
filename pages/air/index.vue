@@ -1,13 +1,217 @@
 <template>
-  <div>机票首页</div>
+  <section class="aircontainer">
+    <h2 class="air-title">
+      <span class="iconfont iconfeiji"></span>
+      <i>国内机票</i>
+    </h2>
+
+    <!-- 搜索广告栏 -->
+    <el-row type="flex" justify="space-between">
+      <!-- 搜索表单 -->
+      <SearchForm />
+
+      <!-- banner广告 -->
+      <div class="sale-banner">
+        <img src="http://157.122.54.189:9093/images/pic_sale.jpeg" alt="">
+      </div>
+    </el-row>
+
+    <!-- 广告 -->
+    <el-row class="statement">
+      <el-col :span="8">
+        <i class="iconfont iconweibiaoti-_huabanfuben" style="color:#409EFF;"></i>
+        <span>100%航协认证</span>
+      </el-col>
+      <el-col :span="8">
+        <i class="iconfont iconbaozheng" style="color: green;"></i>
+        <span>出行保证</span>
+      </el-col>
+      <el-col :span="8">
+        <i class="iconfont icondianhua" style="color:#409EFF;"></i>
+        <span>7x24小时服务</span>
+      </el-col>
+    </el-row>
+
+    <h2 class="air-sale-title">
+      <i class="iconfont icontejiajipiao"></i>
+      <span>特价机票</span>
+    </h2>
+
+    <!-- 特价机票 -->
+    <div class="air-sale">
+      <el-row class="air-sale-pic" type="flex" justify="space-between">
+        <el-col :span="6" v-for="(item, index) in sales" :key="index">
+          <nuxt-link :to="`/air/flights?
+                          departCity=${item.departCity}&departCode=${item.departCode}
+                          &destCity=${item.destCity}&destCode=${item.destCity}&departDate=${item.departDate}`" >
+            <img :src="item.cover" alt="">
+            <el-row class="layer-bar" type="flex" justify="space-between">
+              <span>{{item.departCity}}-{{item.destCity}}</span>
+              <span>￥{{item.price}}</span>
+            </el-row>
+          </nuxt-link>
+        </el-col>
+      </el-row>
+    </div>
+  </section>
 </template>
 
 <script>
+import SearchForm  from "../../components/air/searchForm.vue"
 export default {
+  data(){
+    return{
+      sales: [
+        {
+          cover:"http://157.122.54.189:9095/assets/images/tj01.jpg",
+          departCity: "广州",
+          departCode: "CAN",
+          departDate: "2020-10-27",
+          destCity: "上海",
+          destCode: "SHA",
+          price: 760
+        },
+        {
+          cover:"http://157.122.54.189:9095/assets/images/tj01.jpg",
+          departCity: "广州",
+          departCode: "CAN",
+          departDate: "2020-10-27",
+          destCity: "上海",
+          destCode: "SHA",
+          price: 760
+        },
+        {
+          cover:"http://157.122.54.189:9095/assets/images/tj01.jpg",
+          departCity: "广州",
+          departCode: "CAN",
+          departDate: "2020-10-27",
+          destCity: "上海",
+          destCode: "SHA",
+          price: 760
+        },
+        {
+          cover:"http://157.122.54.189:9095/assets/images/tj01.jpg",
+          departCity: "广州",
+          departCode: "CAN",
+          departDate: "2020-10-27",
+          destCity: "上海",
+          destCode: "SHA",
+          price: 760
+        },
+      ]
+    }
+  },
 
+  components: {
+    SearchForm
+  }
 }
 </script>
 
 <style>
+.air-sale{
+  border: 1px #ddd solid;
+  padding: 20px;
+  margin-bottom: 50px;
+}
+
+.air-sale-pic div{
+  width: 225px;
+  height: 140px;
+  position: relative;
+  overflow: hidden;
+}
+
+.air-sale-pic div img{
+  width: 100%;
+}
+
+.air-sale .air-sale-pic>div .layer-bar{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  height: 30px;
+  line-height: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 15px;
+  font-size: 14px;
+}
+
+.air-sale .air-sale-pic>div .layer-bar span:last-child{
+  font-size: 18px;
+}
+
+.air-sale-group{
+  margin-top: 20px;
+  padding-top: 8px;
+  border-right: 1px #eee solid;
+}
+
+.aisr-sale-group:last-child{
+  border-right: none;
+}
+
+.air-sale-row{
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.aircontainer{
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.air-title{
+  margin: 15px 0;
+  font-size: 20px;
+  font-weight: normal;
+  color: orange;
+}
+
+.air-title span{
+  font-size: 20px;
+}
+
+.statement{
+  margin: 15px 0;
+  border: 1px #ddd solid;
+  background: #f5f5f5;
+  height: 58px;
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+
+.statement div{
+  text-align: center;
+  line-height: 38px;
+  border-right: 1px #ddd solid;
+}
+
+.statement div:last-child{
+  border-right: none;
+}
+
+.statement div *{
+  vertical-align: middle;
+}
+
+.statement div i{
+  font-size: 20px;
+}
+
+.air-sale-title{
+  margin: 15px 0;
+  font-size: 20px;
+  font-weight: normal;
+  color: #409EFF;
+}
+
+.air-sale-title span{
+  font-size: 20px;
+}
 
 </style>
