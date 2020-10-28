@@ -114,6 +114,10 @@ export default {
           }
         })
 
+        // 默认选中第一项
+        this.form.departCode = newData[0].sort;
+        this.form.departCity = newData[0].value;
+
         cb(newData);
       })
     },
@@ -138,7 +142,11 @@ export default {
             ...v,
             value: v.name.replace("市", "")
           }
-        })
+        });
+
+        // 默认选中第一项
+        this.form.destCode = newData[0].sort;
+        this.form.destCity = newData[0].value;
 
         cb(newData);
       })

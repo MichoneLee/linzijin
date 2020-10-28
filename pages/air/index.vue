@@ -42,9 +42,8 @@
       <el-row class="air-sale-pic" type="flex" justify="space-between">
         <el-col :span="6" v-for="(item, index) in sales" :key="index">
           <nuxt-link :to="`/air/flights?
-                          departCity=${item.departCity}&departCode=${item.departCode}
-                          &destCity=${item.destCity}&destCode=${item.destCity}&departDate=${item.departDate}`" >
-            <img :src="item.cover" alt="">
+                          departCity=${item.departCity}&departCode=${item.departCode}&destCity=${item.destCity}&destCode=${item.destCity}&departDate=${item.departDate}`" >
+            <img :src="item.img" alt="">
             <el-row class="layer-bar" type="flex" justify="space-between">
               <span>{{item.departCity}}-{{item.destCity}}</span>
               <span>￥{{item.price}}</span>
@@ -61,49 +60,33 @@ import SearchForm  from "../../components/air/searchForm.vue"
 export default {
   data(){
     return{
-      sales: [
-        {
-          cover:"http://157.122.54.189:9095/assets/images/tj01.jpg",
-          departCity: "广州",
-          departCode: "CAN",
-          departDate: "2020-10-27",
-          destCity: "上海",
-          destCode: "SHA",
-          price: 760
-        },
-        {
-          cover:"http://157.122.54.189:9095/assets/images/tj01.jpg",
-          departCity: "广州",
-          departCode: "CAN",
-          departDate: "2020-10-27",
-          destCity: "上海",
-          destCode: "SHA",
-          price: 760
-        },
-        {
-          cover:"http://157.122.54.189:9095/assets/images/tj01.jpg",
-          departCity: "广州",
-          departCode: "CAN",
-          departDate: "2020-10-27",
-          destCity: "上海",
-          destCode: "SHA",
-          price: 760
-        },
-        {
-          cover:"http://157.122.54.189:9095/assets/images/tj01.jpg",
-          departCity: "广州",
-          departCode: "CAN",
-          departDate: "2020-10-27",
-          destCity: "上海",
-          destCode: "SHA",
-          price: 760
-        },
-      ]
+      sales: []
     }
   },
 
   components: {
     SearchForm
+  },
+
+  mounted(){
+    this.$axios({
+      url: "http://157.122.54.189:9095/airs/sale"
+    }).then(res => {
+
+      const {data} = res.data;
+
+      const newData = data.map(v => {
+        return {
+          ...v,
+          img: "http://157.122.54.189:9095"+ v.cover
+        }
+      })
+
+      console.log("airs/sale:", newData);
+
+      this.sales = newData;
+
+    })
   }
 }
 </script>
