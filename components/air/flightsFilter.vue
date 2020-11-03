@@ -3,9 +3,9 @@
     <el-row class="filters-top" type="flex" justify="space-between" align="middle">
       <el-col :span="8">
         单程:
-        {{data.info.departCity}} - {{data.info.destCity}}
+        广州 - 上海
         /
-        {{data.info.departDate}}
+        2020-11-03
       </el-col>
 
       <el-col :span="4">
@@ -21,7 +21,7 @@
       </el-col>
 
       <el-col :span="4">
-        <el-select size="mini" v-model="flightTimes" placeholder="起飞时间" @change="handleCompany">
+        <el-select size="mini" v-model="compony" placeholder="航空公司" @change="handleCompany">
           <el-option label="厦门航空" value="厦门航空"></el-option>
         </el-select>
       </el-col>

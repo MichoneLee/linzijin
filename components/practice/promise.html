@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Promise</h2>
+
+
+<script type="text/javascript">
+  // 案例一
+  // var dynamicFun = function(cb) {
+  //   setTimeout(function(){
+  //     cb();
+  //   },1000);
+  // }
+
+  // dynamicFun(function(){
+  //   console.log(123)
+  // });
+
+  // 案例二
+  // function promise1() {
+  //   return new Promise(function(resolve, reject){
+  //     // 定义异步的内容
+  //     setTimeout(function(){
+  //       console.log('1s后输出');
+  //       // 输出完成后，调用函数传入的 resolve() 函数,将该 promise 实例标记为已完成，当前 promise 串行继续执行
+  //       resolve();
+  //     },1000)
+  //   })
+  // }
+
+  // function promise2() {
+  //   return new Promise(function(resolve, reject){
+  //     // 定义异步的内容
+  //     setTimeout(function(){
+  //       console.log('2s后输出');
+  //       resolve();
+  //     },2000)
+  //   })
+  // }
+
+  // // promise1().then(function(){
+  // //   return promise2();
+  // // });
+  // promise1().then(promise2);
+
+  // 案例三
+  // function promise3(){
+  //   return new Promise(function(resolve, reject){
+  //     var random = Math.random() * 10; // 随机一个1-10的数字
+  //     setTimeout(function(){
+  //       if ( random >= 5 ) {
+  //         resolve(random);
+  //       } else {
+  //         reject(random);
+  //       }
+  //     }, 1000)
+  //   })
+  // }
+
+  // var onResolve = function(val) {
+  //   console.log('已完成：输出的数字是', val);
+  // }
+
+  // var onReject = function(val) {
+  //   console.log('已拒绝：输出的数字是', val);
+  // }
+
+  // promise 的 then 也可以接收两个函数， 第一个参数为 resolve 后执行，第二个参数为 reject 后执行
+  // promise3().then(onResolve, onReject);
+
+  // 也可以通过 .catch 方法拦截状态变为已拒绝的 promise
+  // promise3().catch(onReject).then(onResolve);
+
+  // 也可以通过 try catch 进行拦截状态变为已拒绝的 promise
+  // try {
+  //   promise3().then(onResolve);
+  // } catch(e) {
+  //   onReject(e);
+  // }
+
+  // 案例5
+  // 封装异步操作为promise
+  // 原函数
+  // var dynamicFunc = function(cb) {
+  //   setTimeout(function(){
+  //     console.log('1s 后显示')
+  //     cb();
+  //   },1000);
+  // }
+
+  // var callback = function() {
+  //   console.log('在异步结束后log');
+  // }
+
+  // dynamicFunc(callback);
+
+  // // 通过封装 promise 的方式，将异步函数封装为promise
+  // function dynamicFuncAsync(){
+  //   return new Promise(function(resolve) {
+  //     setTimeout(function(){
+  //       console.log('2s后显示');
+  //       resolve();
+  //     }, 2000);
+  //   });
+  // }
+
+  // var callback = function() {
+  //   console.log('在异步结束后 log');
+  // }
+
+  // dynamicFuncAsync().then(function(){
+  //   callback();
+  // })
+
+  // 案例6
+  // 发送ajax请求可以进行封装
+  // function ajax(url, success, fail){
+  //   var client = new XMLHttpRequest();
+  //   client.open('GET', url);
+
+  //   client.onreadystatechange = function() {
+  //     if (this.readyState !== 4) {
+  //       return;
+  //     };
+
+  //     if (this.status === 200) {
+  //       success(this.response);
+  //     } else {
+  //       fail(new Error(this.statusText));
+  //     };
+
+  //   };
+  //   client.send();
+  // };
+
+  // ajax('https://www.kdocs.cn/p/86931439613', function(){console.log('成功')}, function(){console.log('失败')});
+
+  // 封装成promise
+  // function ajaxAsync(url) {
+  //   return new Promise(function(resolve, reject){
+  //     var client = new XMLHttpRequest();
+
+  //     client.open("GET", url);
+
+  //     client.onreadystatechange = function() {
+  //       if (this.readyState !== 4) {
+  //         return;
+  //       }
+
+  //       if (this.status === 200) {
+  //         resolve(this.response);
+  //       } else {
+  //         reject(new Error(this.statusText));
+  //       }
+  //     };
+
+  //     client.send();
+
+  //   });
+  // };
+
+  // ajaxAsync('/ajax.json').catch(function() {
+  //   console.log('失败');
+  // }).then(function() {
+  //   console.log('成功');
+  // })
+
+  // 案例7
+  // 输出 promise2 已完成
+  // var promise1 = new Promise((resolve, reject) => {reject();});
+  // promise1
+  // .then(null, function() {
+  //   return 123;
+  // })
+  // .then(null, null)
+  // .then(null, null)
+  // .then(
+  // () => {
+  //   console.log('promise2 已完成');
+  // },
+  // () => {
+  //   console.log('promise2 已拒绝');
+  // });
+
+  // 案例8
+  // var promise1 = function() {
+  //   return new Promise(function(resolve){
+  //     setTimeout(function(){
+  //       console.log(1);
+  //       resolve();
+  //     },1000);
+  //   });
+  // }
+
+  // var promise2 = function() {
+  //   return new Promise(function(resolve){
+  //     setTimeout(function(){
+  //       console.log(2);
+  //       resolve();
+  //     },2000);
+  //   });
+  // }
+
+  // promise1()
+  // .then(function(){
+  //   return promise2();
+  // }).then(function(){console.log('已完成')}, function(){console.log('已拒绝')});
+
+  // 案例8
+  // var promise = Promise.resolve(123);
+  // promise.then(function(val){
+  //   console.log('已完成：', val);
+  // })
+
+  // 案例9
+  // var promise = Promise.reject(123);
+  // promise.then(null,function(val){
+  //   console.log('已拒绝：', val);
+  // })
+
+  // 案例10
+  // var promise1 = function(){
+  //   return new Promise(function(resolve){
+  //     setTimeout(function(){
+  //       console.log(1);
+  //       resolve();
+  //     }, 1000)
+  //   });
+  // }
+
+  // var promise2 = function(){
+  //   return new Promise(function(resolve){
+  //     setTimeout(function(){
+  //       console.log(2);
+  //       resolve();
+  //     }, 2000)
+  //   });
+  // }
+
+  // Promise.all([promise2(), promise1()]).then(function(){
+  //   console.log('全部 promise 均已完成');
+  // })
+
+  // 案例11
+  // var promise1 = function () {
+  //     return new Promise(function (resolve) {
+  //       setTimeout(function () {
+  //         console.log(1);
+  //         resolve(1);
+  //       }, 1000)
+  //     });
+  //   }
+  //   var promise2 = function () {
+  //     return new Promise(function (resolve) {
+  //       setTimeout(function () {
+  //         console.log(2);
+  //         resolve(2);
+  //       }, 2000);
+  //     });
+  //   }
+  //   Promise.race([promise1(), promise2()])
+  //     .then(function (val) {
+  //       console.log('有⼀个 promise 状态已经改变', val);
+  //     });
+
+  // 案例12
+   function promise1 () {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        console.log(1);
+        resolve(1);
+      }, 1000)
+    });
+  }
+
+  function promise2 () {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        console.log(2);
+        resolve(2);
+      }, 2000);
+    });
+  }
+
+  // 使用 generator函数
+  function* gen(){
+    yield promise1();
+    yield promise2();
+  }
+
+  var g = gen();
+  g.next();
+  g.next();
+
+  // 使用async await函数
+  (async function(){
+    try {
+      await promise1();
+      await promise2();
+      console.log('已完成');
+    }catch(e){
+      console.log(e);
+      console.log('已拒绝');
+    }
+  }())
+
+</script>
+</body>
+</html>
