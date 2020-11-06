@@ -5,7 +5,7 @@
       <!-- 顶部过滤列表 -->
       <div class="flights-content">
         <!-- 过滤条件 -->
-        <FlightsFilter :data="flightsData"/>
+        <FlightsFilter :data="cacheFlightsData" @setDataList="setDataList"/>
 
         <!-- 航班头部布局 -->
         <FlightsListHead/>
@@ -47,7 +47,17 @@ export default {
   data(){
     return {
       // flightsData 航班的总数据
-      flightsData: {},
+      flightsData: {
+        info: {},
+        options: {}
+      },
+
+      // 缓存对象，缓存对象一旦被赋值之后不会被修改
+      cacheFlightsData: {
+        info: {},
+        options: {}
+      },
+
       pageIndex: 1, // 默认当前页
       pageSize: 5, // 默认条数
       total: 0, // 默认总条数
@@ -76,7 +86,12 @@ export default {
     },
 
     // 设置机票列表的数据
-    setDataList() {
+    setDataList(arr) {
+      if (arr) {
+        this.flightsData.flights = arr;
+        this.total = arr.length;
+      }
+
       this.dataList = this.flightsData.flights.slice(
         (this.pageIndex - 1) * this.pageSize, this.pageIndex * this.pageSize
       )
@@ -93,7 +108,24 @@ export default {
       params: this.$route.query
     }).then(res => {
       console.log('flights的res.data', res.data);
+      // 总数据，flightsData.flights是会被修改的
       this.flightsData = res.data;
+      // 缓存数据 一旦被赋值后不会被修改
+      this.cacheFlightsData = {...res.data};
+
+      var flightTimes = this.cacheFlightsData.options.flightTimes;
+
+      const newFlightTimes = flightTimes.map(v => {
+        return {
+          ...v,
+          label: v.from + ":00-" + v.to +":00",
+          value: v.from + "," + v.to
+        }
+      })
+
+      this.cacheFlightsData.newFlightTimes = newFlightTimes;
+
+      console.log('newFlightTimes:', newFlightTimes);
 
       this.dataList = this.flightsData.flights.slice(0,5);
 

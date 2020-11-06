@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-  </head>
 
-  <body>
-
-    <script>
       // localStorage
 
       // var obj = [{name: '富婆', age: 38}, {name: '备胎', age: 18}];
@@ -131,8 +120,3 @@
 
 
 
-
-    </script>
-
-  </body>
-</html>
